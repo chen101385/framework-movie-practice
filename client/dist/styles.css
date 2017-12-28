@@ -1,0 +1,11 @@
+#checkBox {
+    float: left
+}
+
+.movieList {
+    list-style: none
+}
+
+.watched {
+    font-style: italic
+}
