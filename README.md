@@ -10,7 +10,7 @@
 - [ COMPLETE ] Add an input field for users to add movies.
 - [ COMPLETE ] Add a button to each list item that allows the user to toggle a 'watched' property.
 - [ COMPLETE ] Add two buttons to allow the users to toggle between a list of 'watched' movies and movies 'to watch'.
-- [ ] Add a panel of movie information that appears when the title is clicked (consider starting with hardcoded information)
+- [ COMPLETE ] Add a panel of movie information that appears when the title is clicked (consider starting with hardcoded information)
 
 You can use the following data: 
 
@@ -32,30 +32,30 @@ var movies = [
 
 
 ## Level 2 - Express Server
-- [ ] Move the hardcoded data from index.jsx to your Express Server js file
-- [ ] In your Express Server code a GET route called /movies which will be used to get the hardcoded list of movies
-- [ ] Modify your index.jsx to call this /movies GET route to do an initial load of your data
-- [ ] In your Express Server code a POST route called /movie. This route will allow the user to create a new movie
-- [ ] Modify your index.jsx use the /movie POST route
+- [ COMPLETE ] Move the hardcoded data from index.jsx to your Express Server js file
+- [ COMPLETE ] In your Express Server code a GET route called /movies which will be used to get the hardcoded list of movies
+- [ COMPLETE ] Modify your index.jsx to call this /movies GET route to do an initial load of your data
+- [ COMPLETE ] In your Express Server code a POST route called /movie. This route will allow the user to create a new movie
+- [ COMPLETE ] Modify your index.jsx use the /movie POST route
 
 
 ## Level 3 - API
-- [ ] Go to https://www.themoviedb.org/documentation/api to learn more about the API you will be using. Sign-up for a new API Key. If you do not receive one within 15 minutes ask a proctor for assistance.
-- [ ] Write code in movieAPI.js necessary to call the API (you may use the 'now_playing' endpoint) and retrieve movie results
-- [ ] Create a new Express GET route called /load in which you make a call to the API. Put the retrieved data into the hardcoded movies array in Express index.js
-- [ ] Modify your index.jsx file accordingly to handle the loaded API data. You should not longer have dummy data anywhere.
+- [ COMPLETE ] Go to https://www.themoviedb.org/documentation/api to learn more about the API you will be using. Sign-up for a new API Key. If you do not receive one within 15 minutes ask a proctor for assistance.
+- [ COMPLETE ] Write code in movieAPI.js necessary to call the API (you may use the 'now_playing' endpoint) and retrieve movie results
+- [ COMPLETE ] Create a new Express GET route called /load in which you make a call to the API. Put the retrieved data into the hardcoded movies array in Express index.js
+- [ COMPLETE ] Modify your index.jsx file accordingly to handle the loaded API data. You should not longer have dummy data anywhere.
 
 
 ## Level 4 - Database
-- [ ] Write code in schema.sql to setup your database structure to be able to store your API movie data
-- [ ] Write code in database/index.js to insert and retrieve data from your database
-- [ ] You will be inserting and retrieving the data retrieved from the API. You may pick and chose which specific fields your store
-- [ ] A test file has been provided for you in database/tests/ which you may run indepdently of your application to test your queries.
+- [ DONE ] Write code in schema.sql to setup your database structure to be able to store your API movie data
+- [ DONE ] Write code in database/index.js to insert and retrieve data from your database
+- [ SKIPPED ] You will be inserting and retrieving the data retrieved from the API. You may pick and chose which specific fields your store
+- [ SKIPPED ] A test file has been provided for you in database/tests/ which you may run indepdently of your application to test your queries.
 
 
 ## Level 5 - Integration
-- [ ] Modify the 3 Express routes so that they are no longer using or accessing any hardcoded data. 
-- [ ] The /load route should be retrieving from the API and inserting into the DB
+- [ DONE ] Modify the 3 Express routes so that they are no longer using or accessing any hardcoded data. 
+- [  ] The /load route should be retrieving from the API and inserting into the DB
 - [ ] The get /movies route should be retrieving from the db
 - [ ] The post /movie route should be inserting into the db
 - [ ] Modify your front end code to only use these routes for both getting and sending data

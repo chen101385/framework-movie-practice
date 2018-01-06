@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class AddMovie extends React.Component {
     constructor(props) {
@@ -7,15 +6,25 @@ class AddMovie extends React.Component {
         //event handler to run everytime word is typed
         //when invoking handleEvent in render (below), bind this to make sure it is changing THIS context's state
         this.state = {
-            movieName: ''
+            movieName: 'movie name',
+            movieInfo: 'description'
         }
     }
-    handleEvent(e) {
+    handleEventName(e) {
         this.setState({movieName: e.target.value})
     }
 
+    handleEventInfo(e) {
+        this.setState({movieInfo: e.target.value})
+    }
+
     handleClick() {
-      this.props.addMovie(this.state.movieName)
+      this.props.addMovie(this.state.movieName, this.state.movieInfo)
+      this.setState({movieName: '', movieInfo: ''})
+    }
+
+    clearInput() {
+      this.setState({movieName: '', movieInfo: ''})
     }
 
     render() {
@@ -23,7 +32,16 @@ class AddMovie extends React.Component {
             <div>
                 <input
                     type="text"
-                    onChange={this.handleEvent.bind(this)}
+                    onChange={this.handleEventName.bind(this)}
+                    value={this.state.movieName}
+                    onClick={this.clearInput.bind(this)}
+                />
+                <br />
+                <br />
+                <input
+                    type="text"
+                    onChange={this.handleEventInfo.bind(this)}
+                    value={this.state.movieInfo}
                 />
               <button onClick={this.handleClick.bind(this)}>Add Movie</button>
             </div>

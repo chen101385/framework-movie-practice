@@ -6,6 +6,7 @@ import AddMovie from './components/AddMovie.jsx';
 import $ from 'jquery';
 
 
+
 //index.jsx is root jsx file
 //search.jsx will be the search bar
 //movielist.jsx will be the movie-list
@@ -17,24 +18,45 @@ class MovieList extends React.Component {
     super();
 
     this.state = {
-      movies: [
-        { title: 'Mean Girls', info: 'this movie stinks' },
-        { title: 'Hackers', info: 'this movie is OK' },
-        { title: 'The Grey', info: 'this movie is good' },
-        { title: 'Sunshine', info: 'this movie is great'},
-        { title: 'Ex Machina', info: 'this movie is excellent' }
-      ],
-      search: ''
+      movies: [],
+      search: '',
+      movieInfo: '',
+      movieList: []
     };
   }
-  //add movie function that returns movie 
-  addMovie(movie) {
-    let obj = {}
-    obj.title = movie.toString()
-    let movieList = this.state.movies
-    movieList.push(obj)
-    this.setState({ movies: movieList })
+  
+  fetchMovies() {
+    //get request [1] URL, [2] options object
+    $.get(`/movies`, {contentType: `application/json`})
+      .done((data) => {console.log('movies fetched'); this.setState({movieList: data}); this.setState({ movies: this.state.movieList})})
+      .fail((error) => console.log(error))
+      //added 2nd setState to .done callback eliminate async issue where function was rendering page w/o updated get data.
   }
+  
+  //post JSON string data to server
+  addMovie(title, info) {
+  //create object to post to server
+    //add title & info to object
+    //pass object into data option in JSON format (required) to be added to server
+    $.post({
+      contentType: `application/json`,
+      url: `/movie`,
+      data: JSON.stringify({title: title, overview: info, watched: false}),
+      success: () => {console.log('post worked'); this.fetchMovies()}
+    })
+    .fail((err) => console.log(err.statusText))
+  }
+  
+
+  // //add movie function that returns movie 
+  // addMovie(movie) {
+  //   let obj = {}
+  //   obj.title = movie.toString()
+  //   obj.id = this.state.movies.length + 1
+  //   let movieList = this.state.movies
+  //   movieList.push(obj)
+  //   this.setState({ movies: movieList })
+  // }
 
 
   search(search) {
@@ -53,30 +75,46 @@ class MovieList extends React.Component {
 
   toggleWatched(movie) {
     //if click watched, add watched property to movie
-      //loop through this.state.movies to find one that matches movie; O(n) time complexity
-      //set movie status to true
-    
+    //loop through this.state.movies to find one that matches movie; O(n) time complexity
+    //set movie status to true
+
     let movieList = this.state.movies
     for (var i = 0; i < movieList.length; i++) {
-      console.log(movieList[i])
       if (movieList[i].title === movie.title) {
         movieList[i].watched = true;
       }
     }
-    console.log('reached toggleWatched')
     this.setState({ movies: movieList })
-    console.log(movieList)
   }
 
   showWatched() {
-    let watchedMovies = this.state.movies.filter((movie) => movie.watched === true )
-    this.setState({movies: watchedMovies})
-    console.log(watchedMovies)
+    this.setState({ movies: this.state.movies.filter((movie) => movie.watched === true)})
   }
 
+  showInfo(video) {
+    this.setState({ movieInfo: this.video.info })
+  }
+
+  componentDidMount() {
+
+    // $.ajax({
+    //   url: '/load',
+    //   method: 'GET',
+    //   contentType: 'application/json',
+    //   success: () => {
+    //     this.fetchMovies();
+    //   },
+    //   error: console.log('get /load failed')
+    // });
+    $.get({
+      url: `/load`,
+      contentType: `application/json`,
+      success: () => this.fetchMovies()
+    })
+    .fail(() => console.log('get /load failed'))
+  }
 
   render() {
-    console.log('why is this rendering')
     return (
       <div>
         <div className="addMovies">
@@ -87,6 +125,10 @@ class MovieList extends React.Component {
           <br />
           <Search search={this.search.bind(this)} handleSearchEvent={this.handleSearchEvent} />
           <br />
+          <div>
+            <button onClick={this.fetchMovies.bind(this)}>Show All Movies</button>
+          </div>
+          <br />
         </div>
         <button onClick={this.showWatched.bind(this)}>Show Watched Movies</button>
         <br />
@@ -95,6 +137,7 @@ class MovieList extends React.Component {
             {this.state.movies.map(item => <Movie
               movie={item}
               watched={this.toggleWatched.bind(this)}
+              key={item.id}
             />
             )}
           </ul>
